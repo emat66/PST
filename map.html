@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Map</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARPV0sJGHf6njnNFtKQHWnpLK1S2sb3O4"></script>
+    <script>
+        let map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: { lat: 0, lng: 0 }
+            });
+        }
+
+        function updateMap(locations) {
+            // Clear existing markers
+            for (let marker of markers) {
+                marker.setMap(null);
+            }
+            markers = [];
+
+            // Add new markers
+            locations.forEach(location => {
+                let marker = new google.maps.Marker({
+                    position: { lat: location.lat, lng: location.lng },
+                    map: map,
+                    title: location.name
+                });
+                markers.push(marker);
+            });
+
+            // Center map to the first location
+            if (locations.length > 0) {
+                map.setCenter({ lat: locations[0].lat, lng: locations[0].lng });
+            }
+        }
+
+        let markers = [];
+    </script>
+</head>
+<body onload="initMap()">
+    <div id="map" style="height: 100%; width: 100%;"></div>
+</body>
+</html>
